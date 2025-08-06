@@ -10,9 +10,17 @@ const app = express();
 
 // Middleware
 app.use(helmet());
+// Update your backend/src/app.js CORS configuration
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: [
+    'http://localhost:5173', 
+    'https://entrepreneur-opc.vercel.app', 
+    /\.vercel\.app$/ // Any vercel deployment
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-apify-token']
 }));
 app.use(morgan('combined'));
 app.use(express.json());
